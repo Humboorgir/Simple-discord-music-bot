@@ -1,7 +1,7 @@
 // importing environment variables
 require("dotenv").config();
 
-const { Client, Events, GatewayIntentBits } = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 
 const { Guilds } = GatewayIntentBits;
 const client = new Client({ intents: Guilds });
