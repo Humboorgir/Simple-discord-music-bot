@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Humboorgir/Sweet/issues"
   },
-  "homepage": "https://github.com/Humboorgir/Sweet#readme"
+  "homepage": "https://github.com/Humboorgir/Sweet#readme",
+  "dependencies": {
+    "discord.js": "^14.11.0"
+  }
 }
