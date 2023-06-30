@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Humboorgir/Sweet#readme",
   "dependencies": {
-    "discord.js": "^14.11.0"
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.3.1"
   }
 }
