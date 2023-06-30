@@ -1,0 +1,19 @@
+{
+  "name": "sweet",
+  "version": "2.0.0",
+  "description": "Advanced discord music bot with tons of customizable options",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Humboorgir/Sweet.git"
+  },
+  "author": "Humboorgir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Humboorgir/Sweet/issues"
+  },
+  "homepage": "https://github.com/Humboorgir/Sweet#readme"
+}
