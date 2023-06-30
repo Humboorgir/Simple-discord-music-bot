@@ -13,6 +13,7 @@ const client = new Client({
 
 client.commands = new Collection();
 
+// Command handler
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -30,6 +31,7 @@ for (const folder of commandFolders) {
   }
 }
 
+// Event handler
 const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith(".js"));
 
