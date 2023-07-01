@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
+const { joinVoiceChannel, createAudioPlayer, createAudioResource } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 
 module.exports = {
@@ -20,17 +20,17 @@ module.exports = {
       return interaction.reply(
         "There is no support for searching yet, please provide a valid **youtube** link"
       );
-    interaction.reply("Loading...");
+    const sentReply = await interaction.reply("Loading...");
     const info = await ytdl.getInfo(input);
     const connection = joinVoiceChannel({
       channelId: voiceChannel.id,
       guildId: voiceChannel.guild.id,
       adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
-    const dispatcher = connection.subscribe(ytdl(input, { filter: "audioonly" }));
-    dispatcher.on("finish", () => {
-      connection.destroy();
-    });
-    interaction.editReply(`Playing ${info.videoDetails.title} from ${info.videoDetails.author}`);
+    const player = createAudioPlayer();
+    const resource = createAudioResource(ytdl(input, { filter: "audioonly" }));
+    player.play(resource);
+    connection.subscribe(player);
+    sentReply.edit(`Playing ${info.videoDetails.title} from ${info.videoDetails.author.name}`);
   },
 };
