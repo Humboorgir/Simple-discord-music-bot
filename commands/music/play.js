@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { joinVoiceChannel } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 
 module.exports = {
@@ -12,9 +13,24 @@ module.exports = {
   async execute(interaction) {
     const input = interaction.options.getString("song");
     const voiceChannel = interaction.member.voice.channel;
-    if (!voiceChannel) return interaction.reply("You need to join a voice channel first!");
+    if (!voiceChannel)
+      return interaction.reply({ content: "You need to join a voice channel first!", ephemeral: true });
     const isUrl = ytdl.validateURL(input);
-    const message = isUrl ? "This is a link!" : "This is not a link!";
-    interaction.reply(message);
+    if (!isUrl)
+      return interaction.reply(
+        "There is no support for searching yet, please provide a valid **youtube** link"
+      );
+    interaction.reply("Loading...");
+    const info = await ytdl.getInfo(url);
+    const connection = joinVoiceChannel({
+      channelId: voiceChannel.id,
+      guildId: voiceChannel.guild.id,
+      adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
+    const dispatcher = await connection.play(ytdl(url, { filter: "audioonly" }));
+    dispatcher.on("finish", () => {
+      connection.destroy();
+    });
+    interaction.editReply(`Playing ${info.videoDetails.title} from ${info.videoDetails.author}`);
   },
 };
