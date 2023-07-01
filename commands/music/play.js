@@ -27,7 +27,7 @@ module.exports = {
       guildId: voiceChannel.guild.id,
       adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
-    const dispatcher = await connection.play(ytdl(input, { filter: "audioonly" }));
+    const dispatcher = connection.subscribe(ytdl(input, { filter: "audioonly" }));
     dispatcher.on("finish", () => {
       connection.destroy();
     });
