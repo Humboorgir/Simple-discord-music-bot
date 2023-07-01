@@ -21,13 +21,13 @@ module.exports = {
         "There is no support for searching yet, please provide a valid **youtube** link"
       );
     interaction.reply("Loading...");
-    const info = await ytdl.getInfo(url);
+    const info = await ytdl.getInfo(input);
     const connection = joinVoiceChannel({
       channelId: voiceChannel.id,
       guildId: voiceChannel.guild.id,
       adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
-    const dispatcher = await connection.play(ytdl(url, { filter: "audioonly" }));
+    const dispatcher = await connection.play(ytdl(input, { filter: "audioonly" }));
     dispatcher.on("finish", () => {
       connection.destroy();
     });
