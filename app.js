@@ -5,10 +5,11 @@ const fs = require("fs");
 const path = require("path");
 
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
-const { Guilds } = GatewayIntentBits;
+const { Guilds, GuildVoiceStates } = GatewayIntentBits;
 
 const client = new Client({
   intents: Guilds,
+  GuildVoiceStates,
 });
 
 client.commands = new Collection();
