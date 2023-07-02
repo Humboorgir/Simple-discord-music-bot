@@ -14,9 +14,10 @@ const client = new Client({
 
 const player = new Player(client);
 
-async () => {
+async function load() {
   await player.extractors.loadDefault();
-};
+}
+load();
 
 client.player = player;
 client.commands = new Collection();
