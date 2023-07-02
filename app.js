@@ -18,6 +18,7 @@ async () => {
   await player.extractors.loadDefault();
 };
 
+client.player = player;
 client.commands = new Collection();
 
 // Command handler
