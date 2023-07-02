@@ -6,10 +6,17 @@ const path = require("path");
 
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const { Guilds, GuildVoiceStates } = GatewayIntentBits;
+const { Player } = require("discord-player");
 
 const client = new Client({
   intents: [Guilds, GuildVoiceStates],
 });
+
+const player = new Player(client);
+
+async () => {
+  await player.extractors.loadDefault();
+};
 
 client.commands = new Collection();
 
@@ -43,6 +50,16 @@ for (const file of eventFiles) {
   } else {
     client.on(event.name, (...args) => event.execute(...args));
   }
+}
+
+// Discord-player event handler
+const eventsPath_ = path.join(__dirname, "player_events");
+const eventFiles_ = fs.readdirSync(eventsPath_).filter((file) => file.endsWith(".js"));
+
+for (const file of eventFiles_) {
+  const filePath = path.join(eventsPath_, file);
+  const event = require(filePath);
+  player.on(event.name, (...args) => event.execute(...args));
 }
 
 client.login(process.env.DISCORD_TOKEN);
