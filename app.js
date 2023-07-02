@@ -61,7 +61,7 @@ const eventFiles_ = fs.readdirSync(eventsPath_).filter((file) => file.endsWith("
 for (const file of eventFiles_) {
   const filePath = path.join(eventsPath_, file);
   const event = require(filePath);
-  player.on(event.name, (...args) => event.execute(...args));
+  player.events.on(event.name, (...args) => event.execute(...args));
 }
 
 client.login(process.env.DISCORD_TOKEN);

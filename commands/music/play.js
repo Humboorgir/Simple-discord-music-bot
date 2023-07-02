@@ -20,7 +20,7 @@ module.exports = {
     try {
       await interaction.client.player.play(voiceChannel, query, {
         nodeOptions: {
-          metadata: interaction, // we can access this metadata object using queue.metadata later on
+          metadata: interaction,
         },
       });
 
