@@ -10,7 +10,7 @@ module.exports = {
     const tracksCurrentPlayingIncluded = [...tracks, queue.currentTrack];
     const tracksFormatted = tracksCurrentPlayingIncluded
       .map((track, i) => {
-        return `${i === 0 ? "[Now playing]" : ""} **${track.title}** from ${track.author}\n`;
+        return `${i + 1}. **${track.title}** by ${track.author} ${i === 0 ? "[Playing now]" : ""}\n`;
       })
       .join("");
     interaction.reply(tracksFormatted);
