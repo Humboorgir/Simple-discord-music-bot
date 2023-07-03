@@ -5,12 +5,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("lyrics")
     .setDescription("Searches for the specified song's lyrics")
-    .addStringOption((option) => {
+    .addStringOption((option) =>
       option
         .setName("song")
         .setDescription("The name of the song which's lyrics you're looking for")
-        .setRequired(true);
-    }),
+        .setRequired(true)
+    ),
   async execute(interaction) {
     const lyricsFinder = lyricsExtractor();
     const song = interaction.options.getString("song");
