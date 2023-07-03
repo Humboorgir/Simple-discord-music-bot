@@ -4,7 +4,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("repeat")
     .setDescription("Changes the repeat mode")
-    .addStringOption((option) => {
+    .addStringOption((option) =>
       option
         .setName("repeat mode")
         .setDescription("The repeat mode you want to set")
@@ -14,8 +14,8 @@ module.exports = {
           { name: "Song", value: "1" },
           { name: "Queue", value: "2" },
           { name: "Related songs", value: "3" }
-        );
-    }),
+        )
+    ),
   execute(interaction) {
     const queue = useQueue(interaction.guild.id);
     const mode = interaction.options.getString("repeat mode");
