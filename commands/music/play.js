@@ -26,7 +26,8 @@ module.exports = {
 
       return;
     } catch (error) {
-      return interaction.followUp(`Something went wrong: ${error}`);
+      console.log(error);
+      return interaction.followUp(`Something went wrong`);
     }
   },
 };
