@@ -5,9 +5,9 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("volume")
     .setDescription("Changes the current playing song's volume")
-    .addIntegerOption((option) => {
-      option.setName("volume").setDescription("Select a number between 0 and 100").setRequired(true);
-    }),
+    .addIntegerOption((option) =>
+      option.setName("volume").setDescription("Select a number between 0 and 100").setRequired(true)
+    ),
   execute(interaction) {
     const volume = interaction.options.getInteger("volume");
     if (!(volume >= 0 && volume <= 100))
