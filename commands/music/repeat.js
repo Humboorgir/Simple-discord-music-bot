@@ -4,16 +4,16 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("repeat")
     .setDescription("Changes the repeat mode")
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option
-        .setName("repeat mode")
+        .setName("mode")
         .setDescription("The repeat mode you want to set")
         .setRequired(true)
         .addChoices(
-          { name: "Off", value: "0" },
-          { name: "Song", value: "1" },
-          { name: "Queue", value: "2" },
-          { name: "Related songs", value: "3" }
+          { name: "Off", value: 0 },
+          { name: "Song", value: 1 },
+          { name: "Queue", value: 2 },
+          { name: "Related songs", value: 3 }
         )
     ),
   execute(interaction) {
