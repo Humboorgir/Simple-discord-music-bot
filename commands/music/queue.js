@@ -5,8 +5,8 @@ module.exports = {
   data: new SlashCommandBuilder().setName("queue").setDescription("Displays the current queue"),
   execute(interaction) {
     const queue = useQueue(interaction.guild.id);
+    if (!queue.currentTrack) return interaction.reply("There is no song being played");
     const tracks = queue.tracks.toArray(); //Converts the queue into a array of tracks
-    if (!tracks.length) return interaction.reply("There is no song being played");
     const tracksCurrentPlayingIncluded = [...tracks, queue.currentTrack];
     const tracksFormatted = tracksCurrentPlayingIncluded
       .map((track, i) => {
