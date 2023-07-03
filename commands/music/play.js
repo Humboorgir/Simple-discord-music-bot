@@ -15,15 +15,18 @@ module.exports = {
 
     const query = interaction.options.getString("song");
 
+    await interaction.deferReply({ ephemeral: true });
+
     try {
-      await interaction.client.player.play(voiceChannel, query, {
+      const { track } = await interaction.client.player.play(voiceChannel, query, {
         nodeOptions: {
           metadata: interaction,
         },
       });
-    } catch (error) {
-      console.log(error);
-      return interaction.editReply(`Something went wrong`);
+
+      return interaction.followUp(`Queued **${track.title}** by ${track.author}`);
+    } catch (e) {
+      return interaction.followUp(`Something went wrong: ${e}`);
     }
   },
 };
