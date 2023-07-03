@@ -15,19 +15,15 @@ module.exports = {
 
     const query = interaction.options.getString("song");
 
-    await interaction.deferReply();
-
     try {
       await interaction.client.player.play(voiceChannel, query, {
         nodeOptions: {
           metadata: interaction,
         },
       });
-
-      return;
     } catch (error) {
       console.log(error);
-      return interaction.followUp(`Something went wrong`);
+      return interaction.editReply(`Something went wrong`);
     }
   },
 };

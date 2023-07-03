@@ -1,6 +1,7 @@
 module.exports = {
   name: "audioTrackAdd",
   execute(queue, track) {
-    queue.metadata.followUp(`queued **${track.title}**`);
+    console.log(`queued something`);
+    queue.metadata.reply({ content: `Queued **${track.title}** from ${track.author}`, ephemeral: true });
   },
 };

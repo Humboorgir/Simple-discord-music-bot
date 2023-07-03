@@ -1,6 +1,6 @@
 module.exports = {
   name: "debug",
-  execute(message) {
+  execute(queue, message) {
     console.log(`Player debug event: ${message}`);
   },
 };

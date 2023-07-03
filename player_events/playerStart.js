@@ -1,6 +1,7 @@
 module.exports = {
   name: "playerStart",
   execute(queue, track) {
-    queue.metadata.followUp(`Playing **${track.title}**`);
+    console.log(`started playing something`);
+    queue.metadata.channel.send(`Playing **${track.title}** from ${track.author}`);
   },
 };

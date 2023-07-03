@@ -1,6 +1,6 @@
 module.exports = {
   name: "playerSkip",
   execute(queue, track) {
-    queue.metadata.reply(`Skipping **${track.title}**`);
+    queue.metadata.channel.send(`Skipping **${track.title}**`);
   },
 };
