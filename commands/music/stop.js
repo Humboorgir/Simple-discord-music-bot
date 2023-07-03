@@ -8,6 +8,6 @@ module.exports = {
     if (!tracks.length)
       return interaction.reply({ content: "There is no song being played.", ephemeral: true });
     queue.delete();
-    return tracks.reply("Stopped!");
+    return interaction.reply("Stopped!");
   },
 };
