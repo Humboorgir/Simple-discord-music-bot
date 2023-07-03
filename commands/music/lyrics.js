@@ -6,7 +6,10 @@ module.exports = {
     .setName("lyrics")
     .setDescription("Searches for the specified song's lyrics")
     .addStringOption((option) => {
-      option.setName("song").setDescription("The name of the song which's lyrics you're looking for");
+      option
+        .setName("song")
+        .setDescription("The name of the song which's lyrics you're looking for")
+        .setRequired(true);
     }),
   async execute(interaction) {
     const lyricsFinder = lyricsExtractor();
