@@ -7,11 +7,10 @@ module.exports = {
     const queue = useQueue(interaction.guild.id);
     if (!queue.currentTrack)
       return interaction.reply({ content: "There are no songs being played.", ephemeral: true });
-    queue.delete();
 
-    const track = queue.currentTrack;
+    queue.delete();
     const stopEmbed = new EmbedBuilder()
-      .setDescription(`Stopped playing ${track.title} by ${track.author}`)
+      .setDescription(`Stopped playing and cleared the queue`)
       .setColor("#0077f7");
 
     return interaction.reply({ embeds: [stopEmbed] });
