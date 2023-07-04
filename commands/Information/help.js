@@ -7,14 +7,14 @@ module.exports = {
 
     let description = "If you want more information about an indiviual command, use /help [command]";
 
-    const categories = [];
+    let categories = [];
 
     commands.forEach((value, key) => {
       if (!categories.includes(value.category)) {
         description += `\n${value.category}\n`;
         categories = [...categories, value.category];
       }
-      description += `${value.command.name}`;
+      description += `${key} `;
     });
 
     const helpEmbed = new EmbedBuilder()
