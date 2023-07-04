@@ -18,7 +18,7 @@ module.exports = {
     ),
   execute(interaction) {
     const queue = useQueue(interaction.guild.id);
-    const mode = interaction.options.getString("repeat mode");
+    const mode = interaction.options.getInteger("repeat mode");
     queue.setRepeatMode(mode);
 
     // for debugging purposes
