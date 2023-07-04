@@ -21,7 +21,7 @@ module.exports = {
       .setColor("#0077f7")
       .setTitle("Here's a list of all the available commands")
       .setDescription(description)
-      .setFooter({ text: `/help [command] for detailed information` });
+      .setFooter({ text: "use /help [command] for detailed information" });
 
     interaction.reply({ embeds: [helpEmbed] });
   },
