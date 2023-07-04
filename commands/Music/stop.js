@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 
 module.exports = {
@@ -8,6 +8,12 @@ module.exports = {
     if (!queue.currentTrack)
       return interaction.reply({ content: "There are no songs being played.", ephemeral: true });
     queue.delete();
-    return interaction.reply("Stopped!");
+
+    const track = queue.currentTrack;
+    const stopEmbed = new EmbedBuilder()
+      .setDescription(`Stopped playing ${track.title} by ${track.author}`)
+      .setColor("#0077f7");
+
+    return interaction.reply({ embeds: [stopEmbed] });
   },
 };
