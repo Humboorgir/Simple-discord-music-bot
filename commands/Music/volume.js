@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 
 module.exports = {
@@ -15,6 +15,8 @@ module.exports = {
 
     const queue = useQueue(interaction.guild.id);
     queue.node.setVolume(volume);
-    return interaction.reply(`Set the volume to ${volume}`);
+
+    const volumeEmbed = new EmbedBuilder().setDescription(`Set the volume to ${volume}`).setColor("#0077f7");
+    return interaction.reply({ embeds: [volumeEmbed] });
   },
 };
