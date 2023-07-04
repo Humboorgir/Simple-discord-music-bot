@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 
 module.exports = {
@@ -6,8 +6,12 @@ module.exports = {
   execute(interaction) {
     const queue = useQueue(interaction.guild.id);
     if (!queue) return interaction.reply("There is no song being played");
-    interaction.reply(`Skipping **${queue.currentTrack.title}** by ${queue.currentTrack.author}`);
 
+    const skipEmbed = new EmbedBuilder()
+      .setDescription(`Skipping ${queue.currentTrack.title} by ${queue.currentTrack.author}`)
+      .setColor("#0077f7");
+
+    interaction.reply({ embeds: [skipEmbed] });
     return queue.node.skip();
   },
 };
