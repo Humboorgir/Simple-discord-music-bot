@@ -5,7 +5,7 @@ module.exports = {
   execute(interaction) {
     const commands = interaction.client.commands;
 
-    let description = "If you want more information about an indiviual command, use /help [command]";
+    let description = "";
 
     let categories = [];
 
@@ -14,13 +14,14 @@ module.exports = {
         description += `\n${value.category}\n`;
         categories = [...categories, value.category];
       }
-      description += `${key} `;
+      description += `\`/${key}\`  `;
     });
 
     const helpEmbed = new EmbedBuilder()
       .setColor("#0077f7")
       .setTitle("Here's a list of all the available commands")
-      .setDescription(description);
+      .setDescription(description)
+      .setFooter({ text: `/help [command] for detailed information` });
 
     interaction.reply({ embeds: [helpEmbed] });
   },
