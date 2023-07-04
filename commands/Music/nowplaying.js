@@ -9,6 +9,15 @@ module.exports = {
     const queue = useQueue(interaction.guild.id);
     if (!queue) return interaction.reply("There are no songs being played");
     const track = queue.currentTrack;
-    interaction.reply(`Currently playing **${track.title}** by ${track.author}`);
+
+    const infoEmbed = new EmbedBuilder()
+      .setTitle(track.title)
+      .setURL(track.url)
+      .setAuthor({ name: track.author })
+      .setThumbnail(track.thumbnail)
+      .setDescription(`Duration: ${track.duration}`)
+      .setColor("#0077f7");
+
+    interaction.reply({ embeds: [infoEmbed] });
   },
 };
