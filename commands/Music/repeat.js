@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 module.exports = {
   data: new SlashCommandBuilder()
@@ -28,6 +28,10 @@ module.exports = {
       3: "Related songs",
     };
 
-    interaction.reply(`Set the repeat mode to ${modes[mode]}`);
+    const repeatEmbed = new EmbedBuilder()
+      .setDescription(`Set the repeat mode to ${modes[mode]}`)
+      .setColor("#0077f7");
+
+    interaction.reply({ embeds: [repeatEmbed] });
   },
 };
