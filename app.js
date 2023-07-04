@@ -21,7 +21,6 @@ load();
 
 client.player = player;
 client.commands = new Collection();
-
 // Command handler
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -36,7 +35,7 @@ for (const folder of commandFolders) {
 
     if (!command.data || !command.execute)
       return console.log(`The command at ${filePath} is missing a required 'data' or 'execute' property.`);
-    client.commands.set(command.data.name, command);
+    client.commands.set(command.data.name, { category: folder, module: command });
   }
 }
 
