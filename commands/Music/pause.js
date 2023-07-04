@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 module.exports = {
   data: new SlashCommandBuilder().setName("pause").setDescription("Pauses the current queue"),
@@ -9,6 +9,9 @@ module.exports = {
     let keyword = paused ? "Resumed" : "Paused";
 
     queue.node.setPaused(!paused);
-    interaction.reply(`${keyword} the current queue`);
+
+    const pauseEmbed = new EmbedBuilder().setDescription(`${keyword} the current queue`).setColor("#0077f7");
+
+    interaction.reply({ embeds: [pauseEmbed] });
   },
 };
