@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder().setName("skip").setDescription("Skips the current playing song"),
   execute(interaction) {
     const queue = useQueue(interaction.guild.id);
-    if (!queue) return interaction.reply("There is no song being played");
+    if (!queue) return interaction.reply({ content: "There are no songs being played", ephemeral: true });
 
     const skipEmbed = new EmbedBuilder()
       .setDescription(`Skipping ${queue.currentTrack.title} by ${queue.currentTrack.author}`)
