@@ -5,7 +5,7 @@ module.exports = {
   execute(interaction) {
     const commands = interaction.client.commands;
 
-    const description = "If you want more information about an indiviual command, use /help [command]";
+    let description = "If you want more information about an indiviual command, use /help [command]";
 
     const categories = [];
 
