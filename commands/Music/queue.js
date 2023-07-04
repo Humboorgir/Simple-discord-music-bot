@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { useQueue } = require("discord-player");
 
 module.exports = {
@@ -13,6 +13,12 @@ module.exports = {
         return `${i + 1}. **${track.title}** by ${track.author} ${i === 0 ? "[Playing now]" : ""}\n`;
       })
       .join("");
-    interaction.reply(tracksFormatted);
+
+    const tracksEmbed = new EmbedBuilder()
+      .setTitle(`Current queue: ${tracks.length + 1} songs`)
+      .setDescription(tracksFormatted)
+      .setColor("#0077f7");
+
+    interaction.reply({ embeds: [tracksEmbed] });
   },
 };
