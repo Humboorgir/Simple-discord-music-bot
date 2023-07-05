@@ -4,7 +4,7 @@ module.exports = {
   name: "playerStart",
   execute(queue, track) {
     const playEmbed = new EmbedBuilder()
-      .setTitle(track.title)
+      .setTitle(`Currently playing: ${track.title}`)
       .setURL(track.url)
       .setAuthor({ name: track.author })
       .setThumbnail(track.thumbnail)
