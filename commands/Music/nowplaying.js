@@ -11,7 +11,7 @@ module.exports = {
     const track = queue.currentTrack;
 
     const infoEmbed = new EmbedBuilder()
-      .setTitle(track.title)
+      .setTitle(`Currently playing: ${track.title}`)
       .setURL(track.url)
       .setAuthor({ name: track.author })
       .setThumbnail(track.thumbnail)
