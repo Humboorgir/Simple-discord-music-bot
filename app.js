@@ -53,7 +53,7 @@ for (const file of eventFiles) {
   }
 }
 
-// Discord-player event handler
+// Discord-player event handler (I probably didn't need to write all this since there's only 1 event that needs to be handled)
 const eventsPath_ = path.join(__dirname, "player_events");
 const eventFiles_ = fs.readdirSync(eventsPath_).filter((file) => file.endsWith(".js"));
 
@@ -62,5 +62,36 @@ for (const file of eventFiles_) {
   const event = require(filePath);
   player.events.on(event.name, (...args) => event.execute(...args));
 }
+
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const { PermissionsBitField } = require("discord.js");
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
+app.get("/servers/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!id) return res.sendStatus(400);
+  const guilds = client.guilds.cache.filter((guild) =>
+    guild.members.cache.some((member) => {
+      return member.id === id && member.permissions.has(PermissionsBitField.Flags.ManageGuild);
+    })
+  );
+  if (!guilds) return res.json([]);
+  const userGuildNames = guilds.map((guild) => {
+    return { name: guild.name, image: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` };
+  });
+
+  return res.json(userGuildNames);
+});
+
+app.listen(8080, () => {
+  console.log(`Server running on port 8080`);
+});
 
 client.login(process.env.DISCORD_TOKEN);
