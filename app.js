@@ -90,7 +90,11 @@ app.get("/servers/:id", async (req, res) => {
     })
   );
 
-  res.send(guilds);
+  const userGuildNames = guilds.map((guild) => {
+    return { name: guild.name, image: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` };
+  });
+
+  res.status(200).json(userGuildNames);
 });
 
 app.listen(8080, () => {
