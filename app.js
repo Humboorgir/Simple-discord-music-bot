@@ -5,11 +5,11 @@ const fs = require("fs");
 const path = require("path");
 
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
-const { Guilds, GuildVoiceStates } = GatewayIntentBits;
+const { Guilds, GuildVoiceStates, GuildMembers } = GatewayIntentBits;
 const { Player } = require("discord-player");
 
 const client = new Client({
-  intents: [Guilds, GuildVoiceStates],
+  intents: [Guilds, GuildVoiceStates, GuildMembers],
 });
 
 const player = new Player(client);
@@ -77,17 +77,20 @@ app.use(
 app.get("/servers/:id", async (req, res) => {
   const id = req.params.id;
   if (!id) return res.sendStatus(400);
-  const guilds = client.guilds.cache.filter((guild) =>
-    guild.members.cache.some((member) => {
-      return member.id === id && member.permissions.has(PermissionsBitField.Flags.ManageGuild);
+
+  let guilds = [];
+
+  await Promise.all(
+    client.guilds.cache.map(async (guild) => {
+      await guild.members.fetch().then((members) => {
+        members.forEach((member) => {
+          if (member.id === id) guilds.push(guild.name);
+        });
+      });
     })
   );
-  if (!guilds) return res.json([]);
-  const userGuildNames = guilds.map((guild) => {
-    return { name: guild.name, image: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` };
-  });
 
-  return res.json(userGuildNames);
+  res.send(guilds);
 });
 
 app.listen(8080, () => {
