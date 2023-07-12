@@ -74,27 +74,27 @@ app.use(
   })
 );
 
-app.get("/servers/:id", async (req, res) => {
-  const id = req.params.id;
-  if (!id) return res.sendStatus(400);
+app.get("/servers/:token", async (req, res) => {
+  const { token } = req.params;
+  if (!token) return res.sendStatus(400);
 
-  let guilds = [];
-
-  await Promise.all(
-    client.guilds.cache.map(async (guild) => {
-      await guild.members.fetch().then((members) => {
-        members.forEach((member) => {
-          if (member.id === id) guilds.push(guild.name);
-        });
-      });
-    })
-  );
-
-  const userGuildNames = guilds.map((guild) => {
-    return { name: guild.name, image: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` };
+  const botGuilds = await axios.get("https://discord.com/api/users/@me/guilds?scope=guilds", {
+    Headers: {
+      Authorization: `Bot ${DISCORD_TOKEN}`,
+    },
   });
 
-  res.status(200).json(userGuildNames);
+  const userGuilds = await axios.get("https://discord.com/api/users/@me/guilds?scope=guilds", {
+    Headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const userGuildsSet = new Set(userGuilds);
+
+  const mutualGuilds = botGuilds.filter((guild) => userGuildsSet.has(guild.id));
+
+  res.status(200).json(mutualGuilds);
 });
 
 app.listen(8080, () => {
