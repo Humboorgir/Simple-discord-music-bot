@@ -74,27 +74,42 @@ app.use(
   })
 );
 
+const fetch = require("node-fetch");
+
 app.get("/servers/:token", async (req, res) => {
   const { token } = req.params;
   if (!token) return res.sendStatus(400);
 
-  const botGuilds = await axios.get("https://discord.com/api/users/@me/guilds?scope=guilds", {
-    Headers: {
-      Authorization: `Bot ${DISCORD_TOKEN}`,
+  const botGuildsReq = await fetch("https://discord.com/api/users/@me/guilds?scope=guilds", {
+    headers: {
+      Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
     },
   });
 
-  const userGuilds = await axios.get("https://discord.com/api/users/@me/guilds?scope=guilds", {
-    Headers: {
+  const botGuilds = await botGuildsReq.json();
+
+  const userGuildsReq = await fetch("https://discord.com/api/users/@me/guilds?scope=guilds", {
+    headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const userGuildsSet = new Set(userGuilds);
+  const userGuilds = await userGuildsReq.json();
 
-  const mutualGuilds = botGuilds.filter((guild) => userGuildsSet.has(guild.id));
+  const userGuildIds = new Set(
+    userGuilds.map((guild) => {
+      return guild.id;
+    })
+  );
 
-  res.status(200).json(mutualGuilds);
+  const mutualGuilds = botGuilds.filter((guild) => userGuildIds.has(guild.id));
+
+  // guilds where the user has 'MANAGE_GUILD' permission
+  const allowedGuilds = mutualGuilds.filter((guild) => {
+    return (guild.permissions & 0x0000000000000020) == 0x0000000000000020;
+  });
+
+  res.status(200).json(allowedGuilds);
 });
 
 app.listen(8080, () => {
