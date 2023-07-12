@@ -77,6 +77,9 @@ app.use(
 const fetch = require("node-fetch");
 
 app.get("/servers/:token", async (req, res) => {
+  // This might not be the most optimized way to handle this (Or it might be Idk)
+  // but it does its job properly for now and I don't wanna touch it unless it becomes a problem
+
   const { token } = req.params;
   if (!token) return res.sendStatus(400);
 
@@ -109,7 +112,15 @@ app.get("/servers/:token", async (req, res) => {
     return (guild.permissions & 0x0000000000000020) == 0x0000000000000020;
   });
 
-  res.status(200).json(allowedGuilds);
+  const guildsFormatted = allowedGuilds.map((guild) => {
+    return {
+      id: guild.id,
+      name: guild.name,
+      image: `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}`,
+    };
+  });
+
+  res.status(200).json(guildsFormatted);
 });
 
 app.listen(8080, () => {
