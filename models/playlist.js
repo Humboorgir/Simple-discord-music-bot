@@ -3,7 +3,6 @@ const { Schema, model } = require("mongoose");
 const playlistSchema = new Schema({
   public: { type: Boolean, required: true },
   owner: {
-    username: { type: String, required: true },
     tag: { type: String, required: true },
     Id: { type: String, required: true },
   },
