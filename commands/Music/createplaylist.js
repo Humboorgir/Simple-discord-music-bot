@@ -21,6 +21,8 @@ module.exports = {
     const playlistName = interaction.options.getString("name");
     const public = interaction.options.getBoolean("public") ?? true;
 
+    interaction.deferReply();
+
     const playlist = new Playlist({
       name: playlistName,
       public: public,
@@ -33,11 +35,10 @@ module.exports = {
 
     try {
       await playlist.save();
-      interaction.reply("Successfully saved the playlist");
-      console.log(playlist);
+      interaction.followUp("Successfully saved the playlist");
     } catch (e) {
       console.log(e);
-      interaction.reply("Failed to save the playlist");
+      interaction.followUp("Failed to save the playlist");
     }
   },
 };
