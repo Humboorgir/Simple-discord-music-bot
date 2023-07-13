@@ -13,7 +13,8 @@ module.exports = {
     const playlistName = interaction.options.getString("playlist");
     const song = interaction.options.getString("song") ?? true;
 
-    const playlist = Playlist.findOne({
+    interaction.deferReply();
+    const playlist = await Playlist.findOne({
       owner: {
         id: interaction.user.id,
       },
@@ -22,6 +23,7 @@ module.exports = {
     if (!playlist) return interaction.reply("The specified playlist does not exist");
 
     const results = await interaction.client.player.search(song);
+    if (!results.hasTracks()) return interaction.followUp(`No results were found for ${song}`);
     const track = results.tracks[0];
 
     const newSong = {
@@ -33,8 +35,8 @@ module.exports = {
 
     try {
       playlist.songs.push(newSong);
+      playlist.save();
       interaction.reply(`Added **${newSong.title}** by ${newSong.author} to **${playlist.name}**`);
-      console.log(playlist);
     } catch (e) {
       console.log(e);
       interaction.reply("Failed to save the playlist");
