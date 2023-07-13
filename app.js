@@ -4,6 +4,17 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
+// Connecting to the database
+const mongoose = require("mongoose");
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("connected to mongoose");
+  });
+
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const { Guilds, GuildVoiceStates, GuildMembers } = GatewayIntentBits;
 const { Player } = require("discord-player");
