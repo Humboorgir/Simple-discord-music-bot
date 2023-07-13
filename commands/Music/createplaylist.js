@@ -24,7 +24,6 @@ module.exports = {
     const playlist = new Playlist({
       public: public,
       owner: {
-        username: interaction.user.username,
         tag: interaction.user.tag,
         Id: interaction.user.id,
       },
@@ -34,6 +33,7 @@ module.exports = {
     try {
       await playlist.save();
       interaction.reply("Successfully saved the playlist");
+      console.log(playlist);
     } catch (e) {
       console.log(e);
       interaction.reply("Failed to save the playlist");
