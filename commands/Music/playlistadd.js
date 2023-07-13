@@ -36,10 +36,10 @@ module.exports = {
     try {
       playlist.songs.push(newSong);
       playlist.save();
-      interaction.reply(`Added **${newSong.title}** by ${newSong.author} to **${playlist.name}**`);
+      interaction.followUp(`Added **${newSong.title}** by ${newSong.author} to **${playlist.name}**`);
     } catch (e) {
       console.log(e);
-      interaction.reply("Failed to save the playlist");
+      interaction.followUp("Failed to save the playlist");
     }
   },
 };
