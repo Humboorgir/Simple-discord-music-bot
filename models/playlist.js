@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const playlistSchema = new Schema({
+  name: { type: String, required: true },
   public: { type: Boolean, required: true },
   owner: {
     tag: { type: String, required: true },

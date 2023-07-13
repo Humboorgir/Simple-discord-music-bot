@@ -22,6 +22,7 @@ module.exports = {
     const public = interaction.options.getBoolean("public") ?? true;
 
     const playlist = new Playlist({
+      name: playlistName,
       public: public,
       owner: {
         tag: interaction.user.tag,
