@@ -13,10 +13,12 @@ module.exports = {
     const playlistName = interaction.options.getString("playlist");
     const song = interaction.options.getString("song") ?? true;
 
-    interaction.deferReply();
+    console.log(playlistName);
+    console.log(song);
     const playlist = await Playlist.findOne({
       owner: {
-        id: interaction.user.id,
+        tag: interaction.user.tag,
+        Id: interaction.user.id,
       },
       name: playlistName,
     });
@@ -36,10 +38,10 @@ module.exports = {
     try {
       playlist.songs.push(newSong);
       playlist.save();
-      interaction.followUp(`Added **${newSong.title}** by ${newSong.author} to **${playlist.name}**`);
+      interaction.reply(`Added **${newSong.title}** by ${newSong.author} to **${playlist.name}**`);
     } catch (e) {
       console.log(e);
-      interaction.followUp("Failed to save the playlist");
+      interaction.reply("Failed to save the playlist");
     }
   },
 };
